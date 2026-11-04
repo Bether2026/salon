@@ -994,6 +994,140 @@ footer {
   footer { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
   .footer-links { flex-wrap: wrap; }
 }
+
+/* CRÉDITO */
+.footer-credit { font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+.footer-credit a { color: var(--gold); text-decoration: none; }
+
+/* ── CONSULTÁ TU FECHA (panel que sube desde abajo) ── */
+.sheet { position: fixed; inset: 0; z-index: 200; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; }
+.sheet-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; transition: opacity 0.35s ease; }
+.sheet-panel {
+  position: relative; width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto;
+  background: linear-gradient(180deg, #141414, #0b0b0b); border: 1px solid rgba(201,168,76,0.25); border-bottom: 0;
+  border-radius: 24px 24px 0 0; padding: 14px 24px calc(28px + env(safe-area-inset-bottom));
+  transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 -30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(201,168,76,0.08);
+}
+.sheet.open { pointer-events: auto; }
+.sheet.open .sheet-backdrop { opacity: 1; }
+.sheet.open .sheet-panel { transform: none; }
+.sheet-handle { width: 40px; height: 4px; border-radius: 4px; background: rgba(242,237,228,0.25); margin: 0 auto 22px; }
+.sheet-close { position: absolute; top: 14px; right: 16px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(242,237,228,0.06); color: var(--bone); font-size: 20px; cursor: pointer; }
+.sheet-tag { font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; }
+.sheet-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 200; line-height: 1; margin: 10px 0 24px; }
+.sheet-title em { font-style: italic; color: var(--gold); }
+.sheet-label { display: block; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(242,237,228,0.5); margin: 0 0 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.chip { font: inherit; font-size: 12px; letter-spacing: 1px; color: rgba(242,237,228,0.75); background: rgba(242,237,228,0.04); border: 1px solid rgba(242,237,228,0.15); padding: 10px 16px; border-radius: 99px; cursor: pointer; transition: all 0.25s; }
+.chip.on { background: var(--gold); border-color: var(--gold); color: var(--black); font-weight: 400; }
+.sheet-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 26px; }
+.sheet-row input, .sheet-row select {
+  width: 100%; font: inherit; font-size: 15px; color: var(--bone); background: rgba(242,237,228,0.04);
+  border: 1px solid rgba(242,237,228,0.15); border-radius: 12px; padding: 13px 12px; color-scheme: dark; outline: none;
+}
+.sheet-row input:focus, .sheet-row select:focus { border-color: var(--gold); }
+.sheet-send { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 0; cursor: pointer; border-radius: 99px; padding: 18px; font: inherit; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 500; color: var(--black); background: linear-gradient(135deg, var(--gold), var(--gold2)); box-shadow: 0 14px 30px -10px rgba(201,168,76,0.7); }
+.sheet-send svg { width: 20px; height: 20px; }
+.sheet-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 14px; }
+
+/* ── VISOR DE FOTOS ── */
+.lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(5,5,5,0.96); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; touch-action: pan-y; }
+.lightbox.open { opacity: 1; pointer-events: auto; }
+.lightbox img { max-width: 92vw; max-height: 78vh; object-fit: contain; border: 1px solid rgba(201,168,76,0.2); transition: opacity 0.25s ease; }
+.lb-cap { position: absolute; bottom: calc(28px + env(safe-area-inset-bottom)); left: 0; right: 0; text-align: center; font-size: 10px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; }
+.lb-btn { position: absolute; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.4); background: rgba(5,5,5,0.6); color: var(--bone); font-size: 22px; cursor: pointer; }
+.lb-close { top: 20px; right: 20px; }
+.lb-prev { left: 20px; top: 50%; margin-top: -24px; }
+.lb-next { right: 20px; top: 50%; margin-top: -24px; }
+.gm-item, .gm-item img { cursor: zoom-in; }
+
+/* La barra y los puntitos existen solo en celular */
+.tabbar, .cdots, .hero-chips, .swipe-hint { display: none; }
+
+/* ═════════ CELULAR ═════════ */
+@media (max-width: 900px) {
+  body { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .hamburger { display: none; }
+
+  /* Hero a pantalla completa real del celu */
+  .hero { height: 100svh; min-height: 620px; }
+  .hero-content { padding-bottom: 40px; }
+  .hero-title { font-size: clamp(54px, 15.5vw, 76px); letter-spacing: -1.5px; }
+  .hero-desc { font-size: 14px; color: rgba(242,237,228,0.7); }
+  .hero-bottom > div { width: 100%; }
+  .hero-bottom .btn-gold { flex: 1; text-align: center; padding: 19px 20px; border-radius: 99px; font-size: 10px; }
+  .hero-scroll { display: none; }
+  .hero-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -24px 22px; padding: 0 24px; opacity: 0; animation: reveal-up 1s ease 1.6s forwards; }
+  .hero-chips::-webkit-scrollbar { display: none; }
+  .hero-chips span { flex: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 9px 14px; border-radius: 99px; border: 1px solid rgba(201,168,76,0.35); color: var(--gold2); background: rgba(5,5,5,0.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+  /* Botones más cómodos para el dedo */
+  .btn-gold, .btn-ghost-white { border-radius: 99px; padding: 18px 28px; font-size: 10px; }
+  .digital-left .btn-gold { width: 100%; text-align: center; }
+  .contact-actions { flex-direction: column; }
+  .contact-actions a { text-align: center; }
+
+  /* Carruseles que se deslizan con el dedo */
+  [data-carousel] { display: flex !important; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -24px; padding: 4px 24px 6px; scroll-padding: 0 24px; -webkit-overflow-scrolling: touch; }
+  [data-carousel]::-webkit-scrollbar { display: none; }
+  [data-carousel] > * { flex: 0 0 84%; scroll-snap-align: center; }
+  .cdots { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
+  .cdots i { width: 6px; height: 6px; border-radius: 99px; background: rgba(242,237,228,0.2); transition: width 0.35s ease, background 0.35s ease; }
+  .cdots i.on { width: 22px; background: var(--gold); }
+  .swipe-hint { display: block; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-top: 14px; }
+
+  /* Espacios: tarjetas con la info siempre a la vista */
+  .spaces-grid > div[style] { display: contents !important; }
+  .space-card { flex: 0 0 84% !important; border-radius: 18px; }
+  .space-card img { min-height: 0; height: 62vh; max-height: 480px; filter: brightness(0.55); }
+  .space-info { transform: none; padding: 28px 22px; }
+  .space-desc { max-height: none; }
+  .space-name { font-size: 30px; }
+
+  /* Números: una franja que se desliza */
+  .stats-dramatic { display: grid; grid-template-columns: repeat(2, 1fr); padding: 40px 24px; }
+
+  /* Galería: fotos verticales que se deslizan, con el nombre visible */
+  .gm-item { flex: 0 0 78% !important; height: 58vh; max-height: 460px; border-radius: 18px; }
+  .gm-item img { filter: brightness(0.7) saturate(0.95); }
+  .gm-label { opacity: 1; font-size: 10px; padding: 22px 20px; }
+
+  /* Testimonios */
+  .t-card { flex: 0 0 86% !important; border-radius: 18px; padding: 44px 26px 32px; }
+
+  /* Barra flotante tipo app */
+  .tabbar {
+    display: grid; grid-template-columns: repeat(5, 1fr); align-items: end;
+    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 150;
+    padding: 9px 4px 8px; border-radius: 24px;
+    background: rgba(10,10,10,0.82); border: 1px solid rgba(201,168,76,0.22);
+    backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    box-shadow: 0 20px 44px -14px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.03) inset;
+    transform: translateY(140%); transition: transform 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s;
+  }
+  .tabbar.show { transform: none; }
+  .tabbar a, .tabbar button { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; font: inherit; font-size: 9.5px; letter-spacing: 1px; color: rgba(242,237,228,0.5); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color 0.3s; }
+  .tabbar svg { width: 22px; height: 22px; }
+  .tabbar a.on { color: var(--gold2); }
+  .tabbar a.on::after { content: ''; position: absolute; top: -9px; width: 18px; height: 2px; border-radius: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+  .tabbar a:active, .tabbar button:active { transform: scale(0.92); }
+  .tab-cta { color: var(--gold2) !important; }
+  .tab-cta .ring {
+    width: 58px; height: 58px; margin-top: -30px; border-radius: 50%; display: grid; place-items: center; color: var(--black);
+    background: linear-gradient(135deg, var(--gold), var(--gold2)); border: 4px solid #0a0a0a;
+    box-shadow: 0 10px 26px -6px rgba(201,168,76,0.8);
+  }
+  .tab-cta .ring svg { width: 24px; height: 24px; }
+  .tab-cta .ring::before { content: ''; position: absolute; top: -30px; width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--gold); animation: tab-pulse 2.4s ease-out infinite; }
+  @keyframes tab-pulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.5); opacity: 0; } }
+
+  .lb-prev, .lb-next { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
+}
 </style>
 </head>
 <body>
@@ -1012,7 +1146,7 @@ footer {
       <li><a href="#invitaciones">Invitaciones</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
-    <a href="https://wa.me/541137028226?text=Hola%2C%20quiero%20consultar%20disponibilidad%20en%20Sal%C3%B3n%20Bether." class="nav-reserve" target="_blank">Reservá tu fecha</a>
+    <a href="https://wa.me/5491137028226?text=Hola%2C%20quiero%20consultar%20disponibilidad%20en%20Sal%C3%B3n%20Bether." class="nav-reserve" target="_blank" data-sheet>Reservá tu fecha</a>
   </div>
   <div class="hamburger" id="hamburger" onclick="toggleNav()">
     <span></span><span></span><span></span>
@@ -1034,10 +1168,11 @@ footer {
       <span class="hero-title-line"><span>momento</span></span>
       <span class="hero-title-line"><span>se eterniza.</span></span>
     </h1>
+    <div class="hero-chips" aria-hidden="true"><span>XV años</span><span>Casamientos</span><span>Cumpleaños</span><span>Infantiles</span><span>Empresas</span></div>
     <div class="hero-bottom">
       <p class="hero-desc">Espacios únicos para XV años, casamientos, cumpleaños y eventos que merecen ser recordados para siempre.</p>
       <div style="display:flex;align-items:center;gap:32px;">
-        <a href="https://wa.me/541137028226" class="btn-gold" target="_blank">Reservá tu fecha</a>
+        <a href="https://wa.me/5491137028226" class="btn-gold" target="_blank" data-sheet>Consultá tu fecha</a>
         <div class="hero-scroll" onclick="document.getElementById('narrative').scrollIntoView({behavior:'smooth'})">
           <div class="hero-scroll-line"></div>
           <span class="hero-scroll-text">Descubrí</span>
@@ -1070,7 +1205,7 @@ footer {
     <h2 class="spaces-title">Tres salones,<br><em>infinitas historias.</em></h2>
     <p class="spaces-intro">Cada espacio fue diseñado para un tipo de celebración distinta. Elegís el que mejor se adapta a tu visión y nosotros hacemos el resto.</p>
   </div>
-  <div class="spaces-grid reveal">
+  <div class="spaces-grid reveal" data-carousel>
     <div class="space-card">
       <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&q=80" alt="Salón Imperial">
       <div class="space-info">
@@ -1113,7 +1248,7 @@ footer {
   <div class="gallery-immersive-header reveal">
     <h2 class="gallery-immersive-title">Momentos que<br><em>quedan para siempre.</em></h2>
   </div>
-  <div class="gallery-masonry reveal">
+  <div class="gallery-masonry reveal" data-carousel>
     <div class="gm-item"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=900&q=80" alt="Casamiento"><div class="gm-label">Casamiento</div></div>
     <div class="gm-item"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=80" alt="XV años"><div class="gm-label">XV años</div></div>
     <div class="gm-item"><img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=700&q=80" alt="Gastronomía"><div class="gm-label">Gastronomía</div></div>
@@ -1153,7 +1288,7 @@ footer {
           </div>
         </div>
       </div>
-      <a href="https://wa.me/541137028226" class="btn-gold" target="_blank">Quiero saber más</a>
+      <a href="https://wa.me/5491137028226" class="btn-gold" target="_blank">Quiero saber más</a>
     </div>
     <div class="digital-right reveal-right">
       <div class="phone-glow"></div>
@@ -1170,7 +1305,7 @@ footer {
   <div class="t-header reveal">
     <h2 class="t-title">Lo dijeron<br><em>ellos.</em></h2>
   </div>
-  <div class="t-grid">
+  <div class="t-grid" data-carousel>
     <div class="t-card reveal">
       <p class="t-quote">El salón superó todas nuestras expectativas. La atención, la comida, la decoración — todo fue perfecto. La invitación digital fue un detalle que encantó a todos nuestros invitados.</p>
       <div class="t-author">Lucía & Martín</div>
@@ -1198,8 +1333,8 @@ footer {
     <h2 class="contact-title">Tu evento<br><em>empieza aquí.</em></h2>
     <p class="contact-sub">Consultanos disponibilidad y te preparamos una propuesta a medida sin compromiso.</p>
     <div class="contact-actions">
-      <a href="https://wa.me/541137028226?text=Hola%2C%20quiero%20consultar%20disponibilidad%20en%20Sal%C3%B3n%20Bether." class="btn-gold" target="_blank">Escribinos por WhatsApp</a>
-      <a href="tel:+541137028226" class="btn-ghost-white">Llamanos</a>
+      <a href="https://wa.me/5491137028226?text=Hola%2C%20quiero%20consultar%20disponibilidad%20en%20Sal%C3%B3n%20Bether." class="btn-gold" target="_blank">Escribinos por WhatsApp</a>
+      <a href="tel:+5491137028226" class="btn-ghost-white">Llamanos</a>
     </div>
   </div>
 </section>
@@ -1214,7 +1349,137 @@ footer {
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="footer-copy">© 2025 Salón Bether. Todos los derechos reservados.</div>
+  <div class="footer-credit">Sitio de muestra · Diseño <a href="https://bether-studio.com" target="_blank">Bether Studio</a></div>
 </footer>
+
+<!-- BARRA FLOTANTE (celular) -->
+<div class="tabbar" id="tabbar" role="navigation" aria-label="Navegación rápida">
+  <a href="#top" data-spy="top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Inicio</span></a>
+  <a href="#espacios" data-spy="espacios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M2 10l10-7 10 7"/></svg><span>Salones</span></a>
+  <button type="button" class="tab-cta" data-sheet><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="m9 15 2 2 4-4"/></svg></span><span>Tu fecha</span></button>
+  <a href="#galeria" data-spy="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>Galería</span></a>
+  <a href="#invitaciones" data-spy="invitaciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Invitación</span></a>
+</div>
+
+<!-- CONSULTÁ TU FECHA -->
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-backdrop" data-close></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-handle"></div>
+    <button type="button" class="sheet-close" data-close aria-label="Cerrar">×</button>
+    <div class="sheet-tag">Fechas limitadas por mes</div>
+    <h2 class="sheet-title" id="sheetTitle">Consultá <em>tu fecha.</em></h2>
+    <span class="sheet-label">¿Qué celebrás?</span>
+    <div class="chips" id="evChips">
+      <button type="button" class="chip on">XV años</button>
+      <button type="button" class="chip">Casamiento</button>
+      <button type="button" class="chip">Cumpleaños</button>
+      <button type="button" class="chip">Infantil</button>
+      <button type="button" class="chip">Empresa</button>
+      <button type="button" class="chip">Otro</button>
+    </div>
+    <div class="sheet-row">
+      <label><span class="sheet-label">Fecha</span><input type="date" id="evDate"></label>
+      <label><span class="sheet-label">Invitados</span>
+        <select id="evGuests">
+          <option>Hasta 80</option><option selected>80 a 120</option><option>120 a 250</option><option>250 a 500</option>
+        </select>
+      </label>
+    </div>
+    <button type="button" class="sheet-send" id="evSend">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.8-1.6.1-.2 0-.3 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.3 1.8.8 2.5.8 3.4.7.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3M12 22a10 10 0 0 1-5.2-1.5L3 22l1.5-3.7A10 10 0 1 1 12 22Z"/></svg>
+      Consultar por WhatsApp
+    </button>
+    <p class="sheet-note">Te respondemos en el día con disponibilidad y presupuesto.</p>
+  </div>
+</div>
+
+<!-- VISOR DE FOTOS -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <img id="lbImg" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+  <button type="button" class="lb-btn lb-close" data-lb="close" aria-label="Cerrar">×</button>
+  <button type="button" class="lb-btn lb-prev" data-lb="-1" aria-label="Anterior">‹</button>
+  <button type="button" class="lb-btn lb-next" data-lb="1" aria-label="Siguiente">›</button>
+</div>
+
+<script>
+  const WA = '5491137028226';
+
+  // Barra flotante: aparece después del hero de entrada y marca la sección actual
+  const tabbar = document.getElementById('tabbar');
+  setTimeout(() => tabbar.classList.add('show'), 1400);
+  const spyLinks = [...tabbar.querySelectorAll('a[data-spy]')];
+  const spyTargets = ['top', 'espacios', 'galeria', 'invitaciones'].map(id => id === 'top' ? document.querySelector('.hero') : document.getElementById(id));
+  const spy = () => {
+    const mid = innerHeight * 0.45; let cur = 'top';
+    spyTargets.forEach((el, i) => { if (el && el.getBoundingClientRect().top < mid) cur = spyLinks[i].dataset.spy; });
+    if (document.getElementById('contacto').getBoundingClientRect().top < mid) cur = '';
+    spyLinks.forEach(a => a.classList.toggle('on', a.dataset.spy === cur));
+  };
+  addEventListener('scroll', spy, { passive: true }); spy();
+  tabbar.querySelector('a[href="#top"]').addEventListener('click', e => { e.preventDefault(); scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Panel "Consultá tu fecha"
+  const sheet = document.getElementById('sheet');
+  const openSheet = e => { if (e) e.preventDefault(); sheet.classList.add('open'); sheet.setAttribute('aria-hidden', 'false'); };
+  const closeSheet = () => { sheet.classList.remove('open'); sheet.setAttribute('aria-hidden', 'true'); };
+  document.querySelectorAll('[data-sheet]').forEach(b => b.addEventListener('click', openSheet));
+  sheet.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeSheet));
+  const chips = [...document.querySelectorAll('#evChips .chip')];
+  chips.forEach(c => c.addEventListener('click', () => chips.forEach(x => x.classList.toggle('on', x === c))));
+  const evDate = document.getElementById('evDate');
+  evDate.min = new Date().toISOString().slice(0, 10);
+  document.getElementById('evSend').addEventListener('click', () => {
+    const tipo = (chips.find(c => c.classList.contains('on')) || {}).textContent || 'evento';
+    const f = evDate.value ? new Date(evDate.value + 'T12:00').toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : 'a definir';
+    const txt = `Hola Salón Bether! Quiero consultar disponibilidad.\nEvento: ${tipo}\nFecha: ${f}\nInvitados: ${document.getElementById('evGuests').value}`;
+    open('https://wa.me/' + WA + '?text=' + encodeURIComponent(txt), '_blank');
+  });
+
+  // Carruseles: puntitos que siguen al dedo
+  document.querySelectorAll('[data-carousel]').forEach(c => {
+    const items = [...c.querySelectorAll('.space-card, .gm-item, .t-card')];
+    const dots = document.createElement('div');
+    dots.className = 'cdots'; dots.setAttribute('aria-hidden', 'true');
+    dots.innerHTML = items.map(() => '<i></i>').join('');
+    c.after(dots);
+    const sync = () => {
+      const mid = c.scrollLeft + c.clientWidth / 2; let best = 0, dist = Infinity;
+      items.forEach((el, k) => { const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid); if (d < dist) { dist = d; best = k; } });
+      [...dots.children].forEach((d, k) => d.classList.toggle('on', k === best));
+    };
+    c.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true }); sync();
+  });
+
+  // Visor de fotos de la galería (deslizar para pasar)
+  const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+  const shots = [...document.querySelectorAll('.gm-item')];
+  let cur = 0;
+  const show = i => {
+    cur = (i + shots.length) % shots.length;
+    const img = shots[cur].querySelector('img');
+    lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt;
+    const hd = new Image(), want = cur;
+    hd.onload = () => { if (cur === want) lbImg.src = hd.src; };
+    hd.src = img.src.replace(/w=\d+/, 'w=1600');
+    lbCap.textContent = `${img.alt} · ${cur + 1} / ${shots.length}`;
+  };
+  shots.forEach((s, i) => s.addEventListener('click', () => { show(i); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); }));
+  const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); };
+  lb.addEventListener('click', e => {
+    const b = e.target.closest('[data-lb]');
+    if (b) { b.dataset.lb === 'close' ? closeLb() : show(cur + +b.dataset.lb); }
+    else if (e.target === lb) closeLb();
+  });
+  let x0 = null;
+  lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); x0 = null; });
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeLb(); closeSheet(); }
+    if (lb.classList.contains('open') && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) show(cur + (e.key === 'ArrowRight' ? 1 : -1));
+  });
+</script>
 
 <script>
   // Cursor personalizado
